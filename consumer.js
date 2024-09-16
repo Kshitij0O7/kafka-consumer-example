@@ -11,7 +11,13 @@ const kafka = new Kafka({
         ca: [fs.readFileSync('server.cer.pem', 'utf-8')],
         key: fs.readFileSync('client.key.pem', 'utf-8'),
         cert: fs.readFileSync('client.cer.pem', 'utf-8')
-    },
+    },  
+    sasl: {
+        mechanism: "scram-sha-512",
+        username: "test",
+        password: "testpw"
+      }
+
 });
 
 const uniqueGroupId = `divyasshree-test-${uuidv4()}`;
