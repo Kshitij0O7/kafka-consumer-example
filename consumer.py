@@ -17,7 +17,7 @@ conf = {
     'sasl.mechanisms': 'SCRAM-SHA-512',
     'sasl.username': 'usernametest',
     'sasl.password': 'pw',
-    'auto.offset.reset': 'earliest'
+    'auto.offset.reset': 'latest'
 }
 
 # Initialize Kafka consumer
