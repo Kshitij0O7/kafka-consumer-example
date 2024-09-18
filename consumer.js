@@ -1,19 +1,20 @@
 const { Kafka } = require('kafkajs');
 const fs = require('fs');
-const lz4 = require('lz4');
-const { v4: uuidv4 } = require('uuid');
+const { CompressionTypes, CompressionCodecs } = require('kafkajs')
+const LZ4 = require('kafkajs-lz4')
 
+CompressionCodecs[CompressionTypes.LZ4] = new LZ4().codec
 // pre-requisites
 
-const username = '<YOUR USERNAME>'
-const password = '<YOUR PASSWORD>'
+const username = '<USERNAME>'
+const password = '<PASSWORD>'
 const topic = 'tron.broadcasted.transactions'
 
 // end of pre-requisites
 
 const kafka = new Kafka({
     clientId: username,
-    brokers: ['rpk0.bitquery.io:A', 'rpk1.bitquery.io:B', 'rpk2.bitquery.io:C'],
+    brokers: ['rpk0.bitquery.io:9093', 'rpk1.bitquery.io:9093', 'rpk2.bitquery.io:9093'],
     ssl: {
         rejectUnauthorized: false,
         ca: [fs.readFileSync('server.cer.pem', 'utf-8')],
@@ -28,7 +29,6 @@ const kafka = new Kafka({
 
 });
 
-const topic = 'tron.broadcasted.transactions';
 const consumer = kafka.consumer({ groupId: username+'my-group', sessionTimeout: 30000 });
 
 const run = async () => {

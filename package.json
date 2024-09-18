@@ -1,0 +1,15 @@
+{
+  "name": "kafka-consumer-app",
+  "version": "0.0.1",
+  "description": "Kafka consumer app to consume messages from a topic using KafkaJS.",
+  "main": "consumer.js",
+  "scripts": {
+    "start": "node consumer.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "kafkajs": "^2.2.3",
+    "kafkajs-lz4": "1.2.1"
+  }
+}
