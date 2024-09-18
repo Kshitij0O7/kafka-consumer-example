@@ -11,10 +11,19 @@ import (
 )
 
 func main() {
+
+	// pre-requisuties
+
+	const username = "<YOUR USERNAME>"
+	const password = "<YOUR PASSWORD>"
+	const topic = "<TOPIC>" // e.g. "tron.broadcasted.transactions"
+
+	// end of pre-requisites
+
 	// Kafka consumer configuration
 	config := &kafka.ConfigMap{
 		"bootstrap.servers":                     "rpk0.bitquery.io:9093,rpk1.bitquery.io:9093,rpk2.bitquery.io:9093",
-		"group.id":                              "trontest2-group-99",
+		"group.id":                              username + "-mygroup",
 		"session.timeout.ms":                    30000,
 		"security.protocol":                     "SASL_SSL",
 		"ssl.ca.location":                       "server.cer.pem",
@@ -22,9 +31,10 @@ func main() {
 		"ssl.certificate.location":              "client.cer.pem",
 		"ssl.endpoint.identification.algorithm": "none",
 		"sasl.mechanisms":                       "SCRAM-SHA-512",
-		"sasl.username":                         "usernammme",
-		"sasl.password":                         "pwwww",
+		"sasl.username":                         username,
+		"sasl.password":                         password,
 		"auto.offset.reset":                     "latest",
+		"enable.auto.commit":                    false,
 	}
 
 	// Initialize Kafka consumer
@@ -33,8 +43,6 @@ func main() {
 		fmt.Printf("Failed to create consumer: %s\n", err)
 		os.Exit(1)
 	}
-
-	topic := "tron.broadcasted.transactions"
 
 	// Subscribe to the topic
 	err = consumer.SubscribeTopics([]string{topic}, nil)
