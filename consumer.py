@@ -4,10 +4,18 @@ import uuid
 import ssl
 from pathlib import Path
 
+# pre-requisites
+
+username = '<YOUR USERNAME>'
+password = '<YOUR PASSWORD>'
+topic = '<TOPIC>' # ' e.g. tron.broadcasted.transactions
+
+# end of pre-requisites
+
 # Kafka consumer configuration
 conf = {
     'bootstrap.servers': 'rpk0.bitquery.io:9093,rpk1.bitquery.io:9093,rpk2.bitquery.io:9093',
-    'group.id': f'trontest1-group-1',  # Generate a unique group ID
+    'group.id': username + '-mygroup',  # Generate a unique group ID
     'session.timeout.ms': 30000,
     'security.protocol': 'SASL_SSL',
     'ssl.ca.location': 'server.cer.pem',
@@ -15,35 +23,24 @@ conf = {
     'ssl.certificate.location': 'client.cer.pem',
     'ssl.endpoint.identification.algorithm': 'none',
     'sasl.mechanisms': 'SCRAM-SHA-512',
-    'sasl.username': 'usernametest',
-    'sasl.password': 'pw',
-    'auto.offset.reset': 'latest'
+    'sasl.username': username,
+    'sasl.password': password,
+    'auto.offset.reset': 'latest',
+    "enable.auto.commit":  'false',
 }
 
 # Initialize Kafka consumer
 consumer = Consumer(conf)
 
-topic = 'tron.broadcasted.transactions'
-
 # Function to process each message
 def process_message(message):
     try:
         buffer = message.value()
-        decompressed_value = None
-
-        try:
-            # Attempt to decompress LZ4 frame
-            decompressed_value = lz4.frame.decompress(buffer).decode('utf-8')
-        except Exception as err:
-            print(f'LZ4 frame decompression failed: {err}')
-            # Fallback to original UTF-8 value if decompression fails
-            decompressed_value = buffer.decode('utf-8')
-
         # Log message data
         log_entry = {
             'partition': message.partition(),
             'offset': message.offset(),
-            'value': decompressed_value
+            'value': buffer.decode('utf-8')
         }
         print(log_entry)
 
