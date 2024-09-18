@@ -4,6 +4,8 @@
 
 [Go Consumer](/consumer.go)
 
+[NodeJS Consumer](/consumer.js)
+
 
 ## Pre-requisites
 
@@ -71,3 +73,10 @@ Before doing measuring of the topics latency, take the following aspects in the 
 2. Examples are single-threaded, in production mode you  need to use multi-threading to consume messages
 3. More effective languages are better to use, as rust/java/golang compared to javascript/python
 4. Timestamp of transaction included in broadcasted messages are when transaction was created, not broadcasted. It may be several seconds before it was sent by wallet to the node
+
+## Running NodeJS example
+
+```
+npm install
+npm run start
+```
