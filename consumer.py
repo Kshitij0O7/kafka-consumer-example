@@ -1,5 +1,4 @@
 from confluent_kafka import Consumer, KafkaError, KafkaException
-import lz4.frame
 import uuid
 import ssl
 from pathlib import Path
