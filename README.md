@@ -4,6 +4,8 @@
 
 [Go Consumer](/consumer.go)
 
+The JS example needs to be updated to handle lz4 compression, please do not copy it!
+
 
 ## Certificates
 
