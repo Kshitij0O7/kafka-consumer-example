@@ -6,6 +6,7 @@
 
 [NodeJS Consumer](/consumer.js)
 
+[Java Example](/Java/)
 
 ## Pre-requisites
 
@@ -112,3 +113,11 @@ go mod init kafka-consumer
 ```bash
 go run consumer.go
 ```
+
+## Running Java example
+
+- Create a new Java Project and replace contents of default `Main.java` with the contents of the Main file added in the folder.
+- Download all the certificates added in the folder and store them in `src/main/resources/` folder.
+- Run the Java program to get the data in terminal.
+
+
