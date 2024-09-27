@@ -6,6 +6,7 @@
 
 [NodeJS Consumer](/consumer.js)
 
+[Java Example](/Java/)
 
 ## Pre-requisites
 
@@ -80,3 +81,43 @@ Before doing measuring of the topics latency, take the following aspects in the 
 npm install
 npm run start
 ```
+
+## Using Go Example
+
+1. Initialize your Go module:
+
+```bash
+go mod init kafka-consumer
+```
+
+This creates a `go.mod` file for your project, enabling dependency management.
+
+2. Install the **confluent-kafka-go** library:
+
+```bash
+go get github.com/confluentinc/confluent-kafka-go/kafka
+```
+
+### Running the Go Kafka Consumer
+
+After setting up the code, follow these steps to run the Go Kafka consumer:
+
+1. **Initialize the Go module** (if not already done):
+
+```bash
+go mod init kafka-consumer
+```
+
+2. **Run the Go file**:
+
+```bash
+go run consumer.go
+```
+
+## Running Java example
+
+- Create a new Java Project and replace contents of default `Main.java` with the contents of the Main file added in the folder.
+- Download all the certificates added in the folder and store them in `src/main/resources/` folder.
+- Run the Java program to get the data in terminal.
+
+
