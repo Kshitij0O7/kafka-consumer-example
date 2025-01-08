@@ -32,7 +32,8 @@ public class Main {
         props.put("ssl.endpoint.identification.algorithm", "");
 
         props.put(SaslConfigs.SASL_JAAS_CONFIG,
-                "org.apache.kafka.common.security.scram.ScramLoginModule required username=\"ssss\" password=\"ssss\";");
+                "org.apache.kafka.common.security.scram.ScramLoginModule required username=\"ssss\" password=\"ssss\";"); 
+        // replace ssss with credentials shared with you
 
         props.put("ssl.keystore.location", "src/main/resources/keystore.jks");
         props.put("ssl.keystore.password", "123456");
