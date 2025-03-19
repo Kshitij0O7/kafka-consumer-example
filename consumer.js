@@ -3,6 +3,8 @@ const { Worker } = require('worker_threads');
 const fs = require("fs");
 const { CompressionTypes, CompressionCodecs } = require("kafkajs");
 const LZ4 = require("kafkajs-lz4");
+const { getAverage } = require('./helpers/average');
+const { writeToExcel } = require('./helpers/writeToExel');
 require('dotenv').config();
 
 CompressionCodecs[CompressionTypes.LZ4] = new LZ4().codec;
@@ -43,6 +45,16 @@ const NUM_WORKERS = 4;
 const workerPool = [];
 let workerIndex = 0;
 
+// Excel File Handling
+const FILE_PATH = 'output.xlsx';
+const SHEET_NAME = 'MUlti Messages';
+
+const writeQueue = []; // Store messages to be written
+
+const write = async () => await writeToExcel(FILE_PATH, SHEET_NAME, writeQueue);
+// Run file writing at intervals to prevent congestion
+setInterval(write, 1); // Every 1 milli second
+
 // Create worker threads
 for (let i = 0; i < NUM_WORKERS; i++) {
     workerPool.push(new Worker('./worker.js'));
@@ -67,18 +79,21 @@ const run = async () => {
             worker.postMessage({
                 partition,
                 offset: message.offset,
-                value: message.value.toString('utf-8'),
+                value: JSON.parse(message.value.toString('utf-8')),
             });
 
             worker.once('message', (response) => {
                 if (response.status === 'done') {
-                    console.log(`Message processed, offset: ${response.offset}, partition: ${partition}`);
+                    console.log(`
+                        ________________________Message processed____________________________
+                    `);
+                    writeQueue.push([response.partition, response.offset, response.lag]);
                 } else {
                     console.error(`Processing failed: ${response.error}`);
                 }
             });
         },
-    });
+    }).finally(console.log(getAverage(FILE_PATH, SHEET_NAME)));
 };
 
 run().catch(console.error);
