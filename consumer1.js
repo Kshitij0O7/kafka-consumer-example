@@ -62,10 +62,9 @@ const run = async () => {
                     offset: message.offset,
                     value: JSON.parse(buffer.toString('utf-8'))
                 };
-                let t1 = logEntry.value[0].TransactionHeader.Time/10e9;
-                let t2 = logEntry.value[0].TransactionHeader.Timestamp/10e9;
-                let lag = t1-t2;
-                writeQueue.push([logEntry.partition, logEntry.offset, lag]);
+                let time = Date.now();
+                let hash = logEntry.value[0].TransactionHeader.Hash;
+                writeQueue.push([hash, time]);
                 console.log("Entry sent");
             } catch (err) {
                 console.error('Error processing message:', err);

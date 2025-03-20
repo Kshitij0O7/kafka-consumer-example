@@ -17,26 +17,26 @@ const writeToExcel = (FILE_PATH, SHEET_NAME, writeQueue) => {
         }
     } else {
         workbook = xlsx.utils.book_new();
-        worksheet = xlsx.utils.aoa_to_sheet([['Partition', 'Offset', 'Message']]); // Headers
+        worksheet = xlsx.utils.aoa_to_sheet([['Hash', 'Time']]); // Headers
         xlsx.utils.book_append_sheet(workbook, worksheet, SHEET_NAME);
     }
 
     if (!worksheet) {
-        worksheet = xlsx.utils.aoa_to_sheet([['Partition', 'Offset', 'Message']]); // Headers
+        worksheet = xlsx.utils.aoa_to_sheet([['Hash', 'Time']]); // Headers
         xlsx.utils.book_append_sheet(workbook, worksheet, SHEET_NAME);
     }
 
     // Convert existing data to a Set for quick lookup of existing (partition, offset) pairs
-    const existingKeys = new Set(jsonData.slice(1).map(row => `${row[0]}-${row[1]}`));
+    const existingKeys = new Set(jsonData.slice(1).map(row => row[0]));
 
     // Append only unique messages
     const newEntries = [];
     while (writeQueue.length > 0) {
-        const [partition, offset, value] = writeQueue.shift();
-        const key = `${partition}-${offset}`;
+        const [hash, time] = writeQueue.shift();
+        const key = hash;
 
         if (!existingKeys.has(key)) { // Avoid duplicate entries
-            newEntries.push([partition, offset, value]);
+            newEntries.push([hash, time]);
             existingKeys.add(key);
         }
     }

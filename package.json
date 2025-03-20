@@ -4,7 +4,8 @@
   "description": "Kafka consumer app to consume messages from a topic using KafkaJS.",
   "main": "consumer.js",
   "scripts": {
-    "start": "node consumer.js"
+    "start": "node consumer.js",
+    "compare": "node ./helpers/compare.js"
   },
   "author": "",
   "license": "ISC",

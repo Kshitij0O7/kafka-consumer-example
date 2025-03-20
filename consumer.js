@@ -47,7 +47,7 @@ let workerIndex = 0;
 
 // Excel File Handling
 const FILE_PATH = 'output.xlsx';
-const SHEET_NAME = 'MUlti Messages';
+const SHEET_NAME = 'Multi Messages';
 
 const writeQueue = []; // Store messages to be written
 
@@ -87,13 +87,13 @@ const run = async () => {
                     console.log(`
                         ________________________Message processed____________________________
                     `);
-                    writeQueue.push([response.partition, response.offset, response.lag]);
+                    writeQueue.push([response.hash, response.time]);
                 } else {
                     console.error(`Processing failed: ${response.error}`);
                 }
             });
         },
-    }).finally(console.log(getAverage(FILE_PATH, SHEET_NAME)));
+    })
 };
 
 run().catch(console.error);
