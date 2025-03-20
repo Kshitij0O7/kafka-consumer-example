@@ -35,7 +35,7 @@ const kafka = new Kafka({
 const consumer = kafka.consumer({ groupId: username+'my-group', sessionTimeout: 30000 });
 
 // Excel File Handling
-const FILE_PATH = 'output.xlsx';
+const FILE_PATH = 'output1.xlsx';
 const SHEET_NAME = 'Messages';
 
 const writeQueue = []; // Store messages to be written

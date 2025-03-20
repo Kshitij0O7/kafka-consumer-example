@@ -2,7 +2,8 @@ const xlsx = require('xlsx');
 const fs = require('fs');
 
 const FILE_PATH = 'output.xlsx';
-const OUT_FILE = 'out.xlsx'
+const FILE_PATH_1 = 'output1.xlsx';
+const OUT_FILE = 'out.xlsx';
 const SHEET_NAME_1 = 'Multi Messages';
 const SHEET_NAME_2 = 'Messages';
 const OUTPUT_SHEET = 'Comparison';
@@ -36,7 +37,7 @@ const readExcelToMap = (filePath, sheetName) => {
 
 // Read both sheets
 const map1 = readExcelToMap(FILE_PATH, SHEET_NAME_1);
-const map2 = readExcelToMap(FILE_PATH, SHEET_NAME_2);
+const map2 = readExcelToMap(FILE_PATH_1, SHEET_NAME_2);
 
 // Compare hashes and compute time differences
 const comparisonData = [['Hash', 'Timestamp 1', 'Timestamp 2', 'Time Difference (ms)']];
